@@ -1,0 +1,61 @@
+{
+    "name": "Robotic Systems — Ubuntu 24.04 / ROS 2 Jazzy",
+    "build": {
+        "dockerfile": "Containerfile",
+        "context": ".."
+    },
+    "privileged": true,
+    "containerUser": "ros",
+    "remoteUser": "ros",
+    "updateRemoteUserUID": false,
+    "workspaceFolder": "/workspace",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "runArgs": [
+        "--network=host",
+        "--ipc=host",
+        "--userns=keep-id:uid=1000,gid=1000",
+        "--runtime=crun",
+        "--group-add=keep-groups",
+        "--device=/dev/dri",
+        "--device=/dev/snd",
+        "--device=/dev/bus/usb"
+        //"--device=/dev/ttyUSB0",
+        
+        // Uncomment for NVIDIA GPU support
+        //"--gpus=all"
+    ],
+    "containerEnv": {
+        "DISPLAY": "${localEnv:DISPLAY}",
+        "XAUTHORITY": "/tmp/.Xauthority",
+        "QT_QPA_PLATFORM": "xcb",
+        "ROS_DOMAIN_ID": "0",
+        "ROS_AUTOMATIC_DISCOVERY_RANGE": "LOCALHOST"
+    },
+    "mounts": [
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,readonly",
+        "source=${localWorkspaceFolder}/.devcontainer/.host/Xauthority,target=/tmp/.Xauthority,type=bind,readonly"
+    ],
+    "initializeCommand": ["bash", ".devcontainer/initialize-host.sh"],
+    "postCreateCommand": ["bash", "/workspace/.devcontainer/post-create.sh"],
+    "overrideCommand": true,
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "mhutchie.git-graph",
+                "oderwat.indent-rainbow",
+                "ranch-hand-robotics.rde-ros-2",
+                "ranch-hand-robotics.urdf-editor"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "python.defaultInterpreterPath": "/usr/bin/python3",
+                "cmake.configureOnOpen": false
+            }
+        }
+    }
+}

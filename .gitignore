@@ -1,0 +1,13 @@
+# Host session cookie, credentials and local configuration
+.devcontainer/.host/
+.env
+.env.*
+*.pem
+*.key
+
+# ROS / colcon generated files
+**/build/
+**/install/
+**/log/
+__pycache__/
+*.pyc

@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "ROS: colcon build",
+            "type": "shell",
+            "command": "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install",
+            "options": {
+                "cwd": "/workspace/ws",
+                "shell": {"executable": "/bin/bash", "args": ["-c"]}
+            },
+            "group": {"kind": "build", "isDefault": true},
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "ROS: install workspace dependencies",
+            "type": "shell",
+            "command": "source /opt/ros/jazzy/setup.bash && rosdep install --from-paths src --ignore-src --rosdistro jazzy -r -y",
+            "options": {
+                "cwd": "/workspace/ws",
+                "shell": {"executable": "/bin/bash", "args": ["-c"]}
+            },
+            "problemMatcher": []
+        }
+    ]
+}
